@@ -2,6 +2,12 @@
 > **반지의 제왕 3D 복셀 디오라마 인터랙티브 웹 애플리케이션**  
 > *A high-performance interactive 3D Voxel Diorama celebrating Tolkien's Middle-earth, built with Three.js and Vite.*
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-f5c862?style=for-the-badge&logo=github&logoColor=black)](https://jeiel85.github.io/lotr-voxel-diorama/)
+[![Three.js](https://img.shields.io/badge/Three.js-r174-black?style=for-the-badge&logo=three.js)](https://threejs.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+
+👉 **라이브 데모 체험하기**: [https://jeiel85.github.io/lotr-voxel-diorama/](https://jeiel85.github.io/lotr-voxel-diorama/)
+
 ---
 
 ## 🌟 Overview (개요)
