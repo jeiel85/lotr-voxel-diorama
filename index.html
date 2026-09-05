@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Lord of the Rings - 3D Voxel Diorama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <!-- 3D WebGL Canvas Container -->
+  <div id="canvas-container"></div>
+
+  <!-- Loading Overlay -->
+  <div id="loader" class="loader-overlay">
+    <div class="ring-loader">
+      <div class="ring-pulse"></div>
+      <div class="elvish-runes">Ash nazg durbatulûk, ash nazg gimbatul...</div>
+    </div>
+    <div class="loader-text">중간계 복셀 디오라마를 구축하는 중...</div>
+  </div>
+
+  <!-- Main UI Header -->
+  <header class="app-header">
+    <div class="header-branding">
+      <div class="sub-title">THE LORD OF THE RINGS</div>
+      <h1 class="main-title">반지의 제왕 복셀 디오라마</h1>
+    </div>
+
+    <!-- Scene Selector Tabs -->
+    <nav class="scene-tabs" id="scene-nav">
+      <button class="scene-tab active" data-scene="shire">
+        <span class="tab-icon">🌿</span>
+        <span class="tab-text">
+          <span class="scene-kr">샤이어 호빗골</span>
+          <span class="scene-en">Bag End, The Shire</span>
+        </span>
+      </button>
+      <button class="scene-tab" data-scene="mordor">
+        <span class="tab-icon">🌋</span>
+        <span class="tab-text">
+          <span class="scene-kr">모르도르 & 사우론의 눈</span>
+          <span class="scene-en">Barad-dûr & Mount Doom</span>
+        </span>
+      </button>
+      <button class="scene-tab" data-scene="argonath">
+        <span class="tab-icon">🗿</span>
+        <span class="tab-text">
+          <span class="scene-kr">아르고나스의 거상</span>
+          <span class="scene-en">The Pillars of Kings</span>
+        </span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Right Floating Control Panel -->
+  <aside class="control-panel">
+    <div class="panel-section">
+      <div class="section-label">조명 모드 (TIME OF DAY)</div>
+      <div class="lighting-group">
+        <button class="btn-icon active" data-light="day" title="한낮 (Day)">
+          <span>☀️</span>
+          <span class="btn-desc">주간</span>
+        </button>
+        <button class="btn-icon" data-light="sunset" title="노을 (Sunset)">
+          <span>🌅</span>
+          <span class="btn-desc">석양</span>
+        </button>
+        <button class="btn-icon" data-light="night" title="밤 (Night)">
+          <span>🌙</span>
+          <span class="btn-desc">야간</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-label">카메라 & 인터랙션</div>
+      <div class="action-grid">
+        <button class="btn-action" id="btn-cinematic" title="360도 시네마틱 턴테이블 회전">
+          <span class="act-icon">🎬</span>
+          <span class="act-text">턴테이블 회전</span>
+        </button>
+        <button class="btn-action" id="btn-assemble" title="복셀 해체 및 마법 조립 애니메이션">
+          <span class="act-icon">🧩</span>
+          <span class="act-text">복셀 재조립</span>
+        </button>
+        <button class="btn-action" id="btn-hotspots" title="명소 정보 핫스팟 토글">
+          <span class="act-icon">📍</span>
+          <span class="act-text">명소 핫스팟</span>
+        </button>
+        <button class="btn-action" id="btn-audio" title="중간계 사운드스케이프 (Web Audio)">
+          <span class="act-icon" id="audio-icon">🔇</span>
+          <span class="act-text" id="audio-text">사운드 켜기</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Slice Inspection Section -->
+    <div class="panel-section">
+      <div class="section-label">
+        <span>단면 슬라이스 (Y-SLICE)</span>
+        <span id="slice-val">100%</span>
+      </div>
+      <div class="slider-container">
+        <input type="range" id="slice-slider" min="10" max="100" value="100" step="1">
+      </div>
+    </div>
+
+    <div class="panel-section bottom-tools">
+      <button class="btn-action full-width" id="btn-reset-cam" title="카메라 위치 초기화">
+        <span>🔄 카메라 뷰 리셋</span>
+      </button>
+      <button class="btn-gold full-width" id="btn-screenshot" title="UI 없는 4K 고화질 스크린샷 캡처">
+        <span>📸 고화질 스크린샷</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Hotspot Lore Cards Overlay -->
+  <div id="lore-modal" class="lore-modal hidden">
+    <div class="lore-modal-backdrop"></div>
+    <div class="lore-modal-card">
+      <button class="lore-close-btn" id="lore-close">✕</button>
+      <div class="lore-tag" id="lore-tag">THE SHIRE</div>
+      <h2 class="lore-title" id="lore-title">골목쟁이네 백엔드 (Bag End)</h2>
+      <div class="lore-subtitle" id="lore-subtitle">빌보와 프로도 배긴스의 보금자리</div>
+      <p class="lore-desc" id="lore-desc">
+        샤이어 호빗골 언덕 꼭대기에 위치한 가장 아늑하고 아름다운 호빗 굴입니다. 
+        완벽하게 둥근 초록색 문과 황동 손잡이가 특징이며, 상단에는 거대한 파티 참나무가 자라나 있습니다.
+      </p>
+      <div class="lore-quote" id="lore-quote">
+        "땅속 어느 굴에 한 호빗이 살고 있었다. 지저분하거나 젖은 굴이 아닌, 아주 안락한 호빗 굴이었다."
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Guidance -->
+  <div class="view-instructions">
+    <div class="instruction-item"><span class="key">마우스 좌클릭 + 드래그</span> 회전</div>
+    <div class="instruction-item"><span class="key">우클릭 + 드래그</span> 이동</div>
+    <div class="instruction-item"><span class="key">휠 스크롤</span> 줌 인/아웃</div>
+    <div class="instruction-item"><span class="key">핫스팟 클릭</span> 전설 열람</div>
+  </div>
+
+  <!-- Voxel Statistics Counter -->
+  <div class="voxel-stats" id="voxel-stats">
+    <span>복셀 블록: <strong id="voxel-count">0</strong>개</span> | 
+    <span>FPS: <strong id="fps-counter">60</strong></span>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

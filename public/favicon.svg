@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="28" fill="#12141c" stroke="#f5c862" stroke-width="4"/>
+  <circle cx="32" cy="32" r="20" fill="none" stroke="#d4a84d" stroke-width="2" stroke-dasharray="4 2"/>
+  <text x="32" y="38" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#f5c862" text-anchor="middle">💍</text>
+</svg>
