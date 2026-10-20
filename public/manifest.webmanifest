@@ -1,0 +1,17 @@
+{
+  "name": "반지의 제왕 복셀 디오라마",
+  "short_name": "LOTR Diorama",
+  "description": "샤이어, 모르도르, 아르고나스를 3D 복셀로 감상하는 반지의 제왕 디오라마.",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0a0b0e",
+  "theme_color": "#0a0b0e",
+  "categories": ["entertainment"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

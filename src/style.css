@@ -362,6 +362,23 @@ html, body {
   gap: 8px;
 }
 
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 2px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.repo-link:hover,
+.repo-link:focus-visible {
+  color: var(--gold-primary);
+}
+
 /* Slider Controls */
 .slider-container input[type="range"] {
   width: 100%;
